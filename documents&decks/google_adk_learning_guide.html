@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google ADK Complete Learning Guide by Dheeraj Chitlangi | Build Intelligent AI Agents</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.7;
+            color: #202124;
+            background: #ffffff;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: #1a73e8;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a73e8 0%, #34a853 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Section */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            color: #1a73e8;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #1a73e8;
+        }
+
+        h3 {
+            color: #34a853;
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+        }
+
+        h4 {
+            color: #ea4335;
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid #1a73e8;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #1a73e8;
+        }
+
+        /* Feature Box */
+        .feature-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f0fe 100%);
+            border-left: 5px solid #1a73e8;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .feature-box.warning {
+            border-left-color: #fbbc04;
+            background: linear-gradient(135deg, #fef7e0 0%, #fff9e6 100%);
+        }
+
+        .feature-box.success {
+            border-left-color: #34a853;
+            background: linear-gradient(135deg, #e6f4ea 0%, #f0f7ed 100%);
+        }
+
+        .feature-box.danger {
+            border-left-color: #ea4335;
+            background: linear-gradient(135deg, #fce8e6 0%, #fff0ee 100%);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #f5f5f5;
+            border-left: 4px solid #1a73e8;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .code-block code {
+            color: #d73a49;
+        }
+
+        /* Visual Diagram */
+        .diagram {
+            background: white;
+            border: 2px solid #e8eaed;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .diagram-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .diagram-box {
+            background: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+            min-width: 150px;
+        }
+
+        .diagram-arrow {
+            font-size: 2rem;
+            color: #1a73e8;
+        }
+
+        /* Steps */
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            position: relative;
+            padding-left: 4rem;
+            margin-bottom: 2rem;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, #1a73e8 0%, #34a853 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #1a73e8;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e8eaed;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+            border-left: 5px solid #fbbc04;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            background: #1a73e8;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #1557b0;
+        }
+
+        .btn-success {
+            background: #34a853;
+        }
+
+        .btn-success:hover {
+            background: #2d8e47;
+        }
+
+        /* Story Box */
+        .story-box {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            border-top: 5px solid #ea4335;
+        }
+
+        .story-box h4 {
+            color: #ea4335;
+            margin-top: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .diagram-flow {
+                flex-direction: column;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: #202124;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        footer a {
+            color: #4285f4;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .emoji {
+            font-size: 1.5rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e8eaed;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: #f8f9fa;
+        }
+
+        .tab.active {
+            border-bottom-color: #1a73e8;
+            color: #1a73e8;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <h1>🚀 Google ADK Complete Guide</h1>
+        <ul>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#getting-started">Getting Started</a></li>
+            <li><a href="#core-concepts">Core Concepts</a></li>
+            <li><a href="#tools">Tools & Integration</a></li>
+            <li><a href="#memory">Memory & State</a></li>
+            <li><a href="#multi-agent">Multi-Agent Systems</a></li>
+            <li><a href="#deployment">Deployment</a></li>
+            <li><a href="#best-practices">Best Practices</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-icon">🤖</div>
+        <h1>Master Google's Agent Development Kit</h1>
+        <p>Build, evaluate, and deploy sophisticated AI agents with code-first flexibility</p>
+        <p style="font-size: 0.9rem; margin-top: 1.5rem; opacity: 0.9;">
+            📝 Curated by <strong>Dheeraj Chitlangi</strong> | © 2025
+        </p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- Introduction -->
+        <section id="intro">
+            <h2>📚 What is Google ADK?</h2>
+            
+            <div class="story-box">
+                <h4>🎯 The Story: From API Calls to Intelligent Agents</h4>
+                <p>Imagine you're building a customer service application. Initially, you might think: "I'll just call an LLM API with a prompt." But soon you realize your assistant needs to:</p>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li>Check order status in your database</li>
+                    <li>Search knowledge base articles</li>
+                    <li>Remember previous conversations</li>
+                    <li>Escalate complex issues to human agents</li>
+                    <li>Work with different specialized sub-agents</li>
+                </ul>
+                <p><strong>This is where Google's Agent Development Kit (ADK) transforms your journey from simple API calls to building production-ready intelligent agents.</strong></p>
+            </div>
+
+            <div class="feature-box success">
+                <h4>✨ What Makes ADK Special?</h4>
+                <p><strong>Google's ADK</strong> is an open-source, code-first framework that applies software development principles to AI agent creation. It's the same framework powering agents within Google products like Agentspace and Google Customer Engagement Suite.</p>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Code-First Development</h3>
+                    <p>Define agent logic, tools, and orchestration directly in Python for ultimate flexibility, testability, and versioning.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧩</div>
+                    <h3>Modular Architecture</h3>
+                    <p>Build scalable applications by composing multiple specialized agents into flexible hierarchies.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🛠️</div>
+                    <h3>Rich Tool Ecosystem</h3>
+                    <p>Utilize pre-built tools, custom functions, OpenAPI specs, MCP tools, or integrate existing tools from LangChain and CrewAI.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌐</div>
+                    <h3>Model Agnostic</h3>
+                    <p>While optimized for Gemini, ADK supports various LLMs including OpenAI, Anthropic, and local models via LiteLLM.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">☁️</div>
+                    <h3>Deploy Anywhere</h3>
+                    <p>Easily containerize and deploy on Cloud Run, or scale seamlessly with Vertex AI Agent Engine Runtime.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎬</div>
+                    <h3>Native Multimodal</h3>
+                    <p>Built-in support for voice, video, images, and real-time streaming with Gemini's multimodal capabilities.</p>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <strong>💡 Key Insight:</strong> ADK covers the entire agent lifecycle—from development and testing to evaluation and production deployment. It's not just a library; it's a complete framework for building enterprise-grade agentic systems.
+            </div>
+        </section>
+
+        <!-- Why Now -->
+        <section>
+            <h2>🌟 Why Build AI Agents Now?</h2>
+            
+            <div class="diagram">
+                <h3>The Perfect Storm: Three Forces Converging</h3>
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-icon">✨</div>
+                        <h4>Powerful Foundation Models</h4>
+                        <p>Advanced reasoning, planning, and multi-modal understanding enable sophisticated decision-making.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🛠️</div>
+                        <h4>Reliable Tool Use</h4>
+                        <p>Models can now reliably request external function calls and APIs, connecting them to the real world.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🕹️</div>
+                        <h4>Developer Frameworks</h4>
+                        <p>Frameworks like ADK provide the structure, orchestration, and tooling to move from prompts to production.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-box warning">
+                <h4>⚠️ The Challenge: Building AI Agents is Complex</h4>
+                <div class="card-grid">
+                    <div class="card">
+                        <h4>🧩 Fragmented Landscape</h4>
+                        <p>Multiple tools, frameworks, and approaches make it difficult to achieve faster development and iteration.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🔗 Integration Difficulties</h4>
+                        <p>Managing dependencies, delegating effectively, and avoiding hard-to-debug workflows between agents.</p>
+                    </div>
+                    <div class="card">
+                        <h4>💥 Ops & Governance</h4>
+                        <p>Beyond development, reliably deploying, scaling, monitoring, and governing an ecosystem of agents.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-box success">
+                <h4>✅ The ADK Solution</h4>
+                <div class="diagram-flow">
+                    <div class="diagram-box">🧰 Toolkit<br><small>Standardized & efficient development</small></div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-box">🤝 Protocols<br><small>Connecting LLMs, tools & agents</small></div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-box">💥 Platform<br><small>Managing deployment & operations</small></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Getting Started -->
+        <section id="getting-started">
+            <h2>🚀 Getting Started with ADK</h2>
+
+            <div class="story-box">
+                <h4>📖 Your First Agent: A Personal Assistant</h4>
+                <p>Let's build your first agent step by step. We'll create a simple personal assistant that can answer questions and tell you the current time.</p>
+            </div>
+
+            <h3>Installation & Setup</h3>
+
+            <ol class="steps">
+                <li>
+                    <strong>Install ADK</strong>
+                    <div class="code-block">
+<code>pip install google-adk</code>
+                    </div>
+                    <p>ADK is available for Python, Go, and Java. The release cadence is roughly bi-weekly.</p>
+                </li>
+
+                <li>
+                    <strong>Create Your First Project</strong>
+                    <div class="code-block">
+<code>adk create --type=code my_first_agent
+cd my_first_agent</code>
+                    </div>
+                    <p>This creates a project structure with agent/ directory containing your agent logic.</p>
+                </li>
+
+                <li>
+                    <strong>Configure API Access</strong>
+                    <p>Create a <code>.env</code> file with your credentials:</p>
+                    
+                    <div class="tabs">
+                        <div class="tab active">Google AI Studio (Fastest)</div>
+                    </div>
+                    <div class="code-block">
+<code># Recommended for prototyping
+GOOGLE_GENAI_USE_VERTEXAI=0
+GOOGLE_API_KEY="YOUR_API_KEY_HERE"
+
+# Get your API key from: https://aistudio.google.com/apikey</code>
+                    </div>
+
+                    <div class="feature-box warning">
+                        <strong>⚠️ Security First:</strong> Never hardcode credentials in your code! Always use environment variables or secret management tools.
+                    </div>
+                </li>
+
+                <li>
+                    <strong>Build Your First Agent</strong>
+                    <p>Edit <code>agent/agent.py</code>:</p>
+                    <div class="code-block">
+<code>from google.adk.agents import LlmAgent
+
+# Define your first agent
+assistant_agent = LlmAgent(
+    # Unique identifier for logging and tracking
+    name="personal_assistant",
+    
+    # The LLM brain (e.g., "gemini-2.0-flash", "gemini-2.5-pro")
+    model="gemini-2.0-flash",
+    
+    # Short description for routing and delegation
+    description="A helpful personal assistant.",
+    
+    # System instructions - the agent's "personality"
+    instruction="""You are a helpful personal assistant. 
+    Be friendly, concise, and always ready to help."""
+)</code>
+                    </div>
+                </li>
+
+                <li>
+                    <strong>Run Your Agent</strong>
+                    <div class="code-block">
+<code># Option 1: Interactive Web UI (best for debugging)
+adk web
+
+# Option 2: Command Line Interface
+adk run
+
+# Option 3: Programmatic (for production)
+python agent.py</code>
+                    </div>
+                </li>
+            </ol>
+
+            <div class="feature-box success">
+                <h4>🎉 Congratulations!</h4>
+                <p>You've just created your first AI agent! But this agent can only chat. To make it truly useful, we need to give it <strong>tools</strong> to interact with the world.</p>
+            </div>
+        </section>
+
+        <!-- Core Concepts -->
+        <section id="core-concepts">
+            <h2>🧠 Core Concepts of ADK</h2>
+
+            <h3>Understanding Agents</h3>
+
+            <div class="feature-box">
+                <h4>📖 Definition: What is an Agent?</h4>
+                <p><strong>An agent is an application that attempts to achieve a goal by observing the world and acting upon it using an LLM and the tools at its disposal.</strong></p>
+            </div>
+
+            <div class="diagram">
+                <h4>The Developer's View: From API Call to Reasoning Loop</h4>
+                <div class="diagram-flow">
+                    <div class="diagram-box">User Input</div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-box">LLM Reasoning</div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-box">Tool Selection</div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-box">Tool Execution</div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-box">Response</div>
+                </div>
+                <p><em>This loop continues until the agent achieves its goal or determines it cannot proceed.</em></p>
+            </div>
+
+            <h3>Types of Agents in ADK</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Agent Type</th>
+                        <th>Main Component</th>
+                        <th>Primary Function</th>
+                        <th>Best Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>LlmAgent</strong></td>
+                        <td>LLM (e.g., Gemini)</td>
+                        <td>Reasoning & Acting</td>
+                        <td>Chatbots, routers, dynamic decision-making</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WorkflowAgent</strong></td>
+                        <td>Pre-defined pattern</td>
+                        <td>Orchestration</td>
+                        <td>Sequential/parallel/loop workflows</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CustomAgent</strong></td>
+                        <td>Your Python Code</td>
+                        <td>Custom Logic</td>
+                        <td>Complex conditional branching</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="story-box">
+                <h4>🎭 Real-World Example: Travel Planning System</h4>
+                <p>Imagine building a travel booking system:</p>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li><strong>LlmAgent:</strong> Main coordinator that understands user intent ("I want to visit Paris")</li>
+                    <li><strong>WorkflowAgent (Sequential):</strong> Orchestrates the booking flow: search flights → book flight → search hotels → book hotel</li>
+                    <li><strong>WorkflowAgent (Parallel):</strong> Searches flights and hotels simultaneously to save time</li>
+                    <li><strong>CustomAgent:</strong> Handles payment processing with specific business logic</li>
+                </ul>
+            </div>
+
+            <h3>The Anatomy of an LlmAgent</h3>
+
+            <div class="code-block">
+<code>from google.adk.agents import LlmAgent
+
+assistant_agent = LlmAgent(
+    # The unique identifier
+    # Used for logging and inter-agent communication
+    name="assistant_agent",
+    
+    # The "brain" - the LLM model
+    model="gemini-2.0-flash",
+    
+    # Short summary for OTHER agents to read
+    # Helps a router decide when to delegate
+    description="A helper agent that can answer questions.",
+    
+    # The "soul" - system prompt defining persona and behavior
+    instruction="""You are an agent to help answer questions.
+    Be concise and helpful.""",
+    
+    # Tools the agent can use (we'll cover this next!)
+    tools=[]
+)</code>
+            </div>
+        </section>
+
+        <!-- Model Integration -->
+        <section>
+            <h2>🤖 Model Integration: Choosing Your Agent's Brain</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Google AI Studio</h3>
+                    <p><strong>Best for:</strong> Rapid prototyping, quick demos, personal projects</p>
+                    <p><strong>Pros:</strong> ✓ Fast setup ✓ Simple authentication ✓ No GCP required</p>
+                    <p><strong>Cons:</strong> ✗ Limited enterprise features ✗ Usage quotas</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">☁️</div>
+                    <h3>Vertex AI</h3>
+                    <p><strong>Best for:</strong> Production systems, enterprise apps, compliance needs</p>
+                    <p><strong>Pros:</strong> ✓ Enterprise security ✓ SLAs ✓ Monitoring & logging ✓ Model Garden</p>
+                    <p><strong>Cons:</strong> ✗ Requires Google Cloud setup</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔀</div>
+                    <h3>LiteLLM Integration</h3>
+                    <p><strong>Best for:</strong> Multi-model apps, specialized tasks, model benchmarking</p>
+                    <p><strong>Pros:</strong> ✓ 100+ models (OpenAI, Anthropic, etc.) ✓ Easy switching</p>
+                    <p><strong>Cons:</strong> ✗ Additional dependency</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🏠</div>
+                    <h3>Local Models (Ollama/vLLM)</h3>
+                    <p><strong>Best for:</strong> Private data, cost optimization, offline environments</p>
+                    <p><strong>Pros:</strong> ✓ Full privacy ✓ No API costs ✓ Offline operation</p>
+                    <p><strong>Cons:</strong> ✗ Hardware requirements ✗ Limited capabilities</p>
+                </div>
+            </div>
+
+            <h3>Example: Using Different Models</h3>
+
+            <div class="tabs">
+                <div class="tab active">Gemini (Google AI Studio)</div>
+            </div>
+            <div class="code-block">
+<code># Configure .env
+GOOGLE_GENAI_USE_VERTEXAI=0
+GOOGLE_API_KEY="your-api-key"
+
+# Use in agent
+from google.adk.agents import LlmAgent
+
+agent = LlmAgent(
+    name="assistant",
+    model="gemini-2.0-flash",  # Fast and efficient
+    # model="gemini-2.5-pro",  # More capable for complex tasks
+    instruction="You are a helpful assistant."
+)</code>
+            </div>
+
+            <div class="tabs">
+                <div class="tab">LiteLLM (Multi-Provider)</div>
+            </div>
+            <div class="code-block">
+<code>from google.adk.agents import LlmAgent
+from google.adk.models import LiteLlm
+
+# Use Claude from Anthropic
+anthropic_model = LiteLlm(model="anthropic/claude-3-haiku")
+
+agent = LlmAgent(
+    name="assistant",
+    model=anthropic_model,
+    instruction="You are a helpful assistant."
+)
+
+# Environment: ANTHROPIC_API_KEY="your-api-key"</code>
+            </div>
+
+            <div class="highlight">
+                <strong>💡 Pro Tip:</strong> Start with Google AI Studio for development, then move to Vertex AI for production. The code stays the same—you just change the .env file!
+            </div>
+        </section>
+
+        <!-- Tools -->
+        <section id="tools">
+            <h2>🛠️ Tools: Giving Your Agent Superpowers</h2>
+
+            <div class="story-box">
+                <h4>🎯 The Problem: Agents Need to Act, Not Just Talk</h4>
+                <p>Imagine asking your assistant: <em>"What time is it?"</em></p>
+                <p>Without tools, the agent can only say: <em>"I'm sorry, I don't have access to the current time."</em></p>
+                <p><strong>With tools</strong>, the agent can actually check the time and give you a real answer!</p>
+            </div>
+
+            <div class="feature-box">
+                <h4>📖 What are Tools?</h4>
+                <p><strong>Tools are functions that transform an LLM from a conversationalist into a capable assistant.</strong> They enable agents to perform actions beyond text generation—like checking databases, calling APIs, running code, or searching the web.</p>
+            </div>
+
+            <h3>Types of Tools in ADK</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>Function Tools</h3>
+                    <p>Custom Python functions decorated with @tool</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📦</div>
+                    <h3>Built-in Tools</h3>
+                    <p>Pre-configured tools like Google Search, Code Execution, BigQuery</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌐</div>
+                    <h3>OpenAPI Tools</h3>
+                    <p>Auto-generated from OpenAPI specifications</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔌</div>
+                    <h3>MCP Tools</h3>
+                    <p>Model Context Protocol tools for standardized integrations</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🤝</div>
+                    <h3>Third-Party Tools</h3>
+                    <p>LangChain, CrewAI, and other framework tools</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">☁️</div>
+                    <h3>Google Cloud Tools</h3>
+                    <p>Calendar, Drive, Spanner, and 100+ connectors</p>
+                </div>
+            </div>
+
+            <h3>Creating Your First Tool</h3>
+
+            <div class="code-block">
+<code>from google.adk.tools import tool
+import datetime
+
+@tool
+def get_current_time(city: str) -> str:
+    """Returns the current time in the specified city.
+    
+    Args:
+        city (str): The name of the city
+        
+    Returns:
+        str: Current time in that city
+    """
+    # Implementation
+    if city.lower() == "new york":
+        tz = "America/New_York"
+    else:
+        tz = "UTC"
+    
+    now = datetime.datetime.now()
+    return f"The current time in {city} is {now.strftime('%H:%M:%S')}"</code>
+            </div>
+
+            <div class="feature-box success">
+                <h4>✨ Key Elements of a Tool:</h4>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li><strong>@tool decorator:</strong> Registers the function as a tool</li>
+                    <li><strong>Type hints:</strong> Help the LLM understand inputs/outputs</li>
+                    <li><strong>Docstring:</strong> Explains the tool's purpose to the LLM (crucial!)</li>
+                    <li><strong>Return value:</strong> Provides data back to the agent</li>
+                </ul>
+            </div>
+
+            <h3>Registering Tools with Your Agent</h3>
+
+            <div class="code-block">
+<code>@tool
+def check_calendar(date: str) -> str:
+    """Checks calendar for events on a specific date.
+    
+    Args:
+        date: Date in YYYY-MM-DD format
+    """
+    events = {
+        "2025-09-03": "Team Meeting at 10 AM",
+        "2025-09-05": "Project Deadline"
+    }
+    return events.get(date, "No events scheduled.")
+
+# Create agent with tools
+assistant = LlmAgent(
+    name="personal_assistant",
+    model="gemini-2.0-flash",
+    instruction="You are a helpful assistant.",
+    tools=[get_current_time, check_calendar]  # Register tools here!
+)
+
+# Now when user asks "What time is it?" or "Do I have meetings tomorrow?"
+# the agent will automatically use the appropriate tool!</code>
+            </div>
+
+            <h3>Built-in Tools: Ready-to-Use Capabilities</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>🔍 Google Search Tool</h4>
+                    <p>Performs web searches and returns relevant results. Perfect for real-time information.</p>
+                    <div class="code-block" style="font-size: 0.8rem;">
+<code>tools=["google_search"]</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>💻 Code Execution Tool</h4>
+                    <p>Runs Python code safely in a sandboxed environment. Great for data analysis and calculations.</p>
+                    <div class="code-block" style="font-size: 0.8rem;">
+<code>tools=["code_executor"]</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>📊 BigQuery Tool</h4>
+                    <p>Executes SQL queries against Google BigQuery for enterprise data access.</p>
+                    <div class="code-block" style="font-size: 0.8rem;">
+<code>tools=["bigquery"]</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-box warning">
+                <h4>⚠️ Built-in Tool Limitations:</h4>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li>Only one built-in tool per agent is supported</li>
+                    <li>Most require Gemini 2.0+ models</li>
+                    <li>Cannot be used in sub-agents</li>
+                    <li><strong>Tip:</strong> Use OpenAPI or function tools to bypass these limitations</li>
+                </ul>
+            </div>
+
+            <h3>OpenAPI Tools: Instant API Integration</h3>
+
+            <div class="story-box">
+                <h4>💡 The Challenge</h4>
+                <p>Your Pet Store API has 50 endpoints. Do you really want to write 50 function tools by hand?</p>
+                <p><strong>Solution:</strong> OpenAPI tools automatically generate tools from your API specification!</p>
+            </div>
+
+            <div class="code-block">
+<code>from google.adk.tools.openapi_tool.openapi_spec_parser import OpenAPIToolset
+
+# Load OpenAPI specification
+with open("petstore_api.json", "r") as f:
+    openapi_spec = f.read()
+
+# Auto-generate tools from spec
+petstore_toolset = OpenAPIToolset(
+    spec_str=openapi_spec,
+    spec_str_type="json",
+    auth_scheme="bearer",
+    auth_credential="API_KEY_HERE"
+)
+
+# Create agent with OpenAPI tools
+api_agent = LlmAgent(
+    name="petstore_assistant",
+    model="gemini-2.0-flash",
+    tools=[petstore_toolset],
+    instruction="Help users interact with the Pet Store API."
+)</code>
+            </div>
+
+            <div class="diagram">
+                <h4>How OpenAPI Tools Work</h4>
+                <div class="diagram-flow">
+                    <div class="diagram-box">OpenAPI Spec<br>(JSON/YAML)</div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-box">ADK Parser</div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-box">Auto-Generated Tools</div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-box">Agent Uses Tools</div>
+                </div>
+                <p><em>Each API endpoint becomes a separate tool with proper schemas and parameters!</em></p>
+            </div>
+
+            <h3>Tool Context: Making Tools Stateful</h3>
+
+            <div class="feature-box">
+                <h4>🎯 What is ToolContext?</h4>
+                <p><strong>ToolContext</strong> is a special object passed to tools that provides access to session information, state, and contextual data. It transforms tools from stateless functions into intelligent, coordinated components.</p>
+            </div>
+
+            <div class="code-block">
+<code>from google.adk.tools import ToolContext
+
+@tool
+def update_user_preferences(
+    theme: str,
+    language: str,
+    tool_context: ToolContext
+) -> str:
+    """Update user preferences in session state."""
+    # Write to state
+    tool_context.state['user_theme'] = theme
+    tool_context.state['user_language'] = language
+    return f"Preferences updated: {theme}, {language}"
+
+@tool
+def get_personalized_greeting(tool_context: ToolContext) -> str:
+    """Get greeting based on stored preferences."""
+    # Read from state
+    lang = tool_context.state.get('user_language', 'en')
+    
+    greetings = {'en': 'Hello', 'es': 'Hola', 'fr': 'Bonjour'}
+    return greetings.get(lang, 'Hello')</code>
+            </div>
+
+            <div class="highlight">
+                <strong>💡 Pro Tip:</strong> Always check if there's a built-in tool before building your own! ADK provides tools for Google Search, Workspace (Calendar, Drive, etc.), Spanner, and more.
+            </div>
+        </section>
+
+        <!-- Memory and Sessions -->
+        <section id="memory">
+            <h2>🧠 Memory & State: Making Agents Remember</h2>
+
+            <div class="story-box">
+                <h4>🐟 The "Goldfish" Challenge</h4>
+                <p><strong>Turn 1:</strong></p>
+                <p>User: "Hi, my name is Alex. What's the weather in Seattle?"</p>
+                <p>Agent: "Hello Alex! The weather in Seattle is sunny, 72°F."</p>
+                <p><strong>Turn 2:</strong></p>
+                <p>User: "What's my name?"</p>
+                <p>Agent: "I'm sorry, I don't know your name."</p>
+                <p><strong>😱 The agent forgot!</strong></p>
+            </div>
+
+            <div class="feature-box warning">
+                <h4>⚠️ The Problem: Agents Have No Memory by Default</h4>
+                <p>Without memory, each conversation turn is isolated. The agent can't remember previous interactions, user preferences, or context from earlier in the conversation.</p>
+            </div>
+
+            <h3>Sessions: The Conversation Thread</h3>
+
+            <div class="feature-box">
+                <h4>📖 What is a Session?</h4>
+                <p>A <strong>session</strong> is the current conversation thread. It stores:</p>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li><strong>Events:</strong> The conversation history (user messages, agent responses, tool calls)</li>
+                    <li><strong>State:</strong> Short-term "scratchpad" for storing data during the conversation</li>
+                    <li><strong>Metadata:</strong> Session ID, user ID, app name</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+<code>{
+    "id": "session_e4a1-b8d2",
+    "appName": "weather_bot_app",
+    "userId": "developer_123",
+    
+    "state": {
+        "last_city_checked": "London",
+        "temperature_unit": "Fahrenheit",
+        "user_tier": "premium"
+    },
+    
+    "events": [
+        {
+            "author": "user",
+            "content": {
+                "parts": [{"text": "What is the weather like in London?"}]
+            }
+        },
+        {
+            "author": "assistant",
+            "content": {
+                "parts": [{"text": "The weather in London is..."}]
+            }
+        }
+    ]
+}</code>
+            </div>
+
+            <h3>Types of Session Services</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>How It Works</th>
+                        <th>Persistence</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>InMemorySessionService</strong></td>
+                        <td>Stores data in application memory</td>
+                        <td>None (lost on restart)</td>
+                        <td>Quick tests, local development</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DatabaseSessionService</strong></td>
+                        <td>Stores in PostgreSQL, MySQL, SQLite</td>
+                        <td>Yes (survives restarts)</td>
+                        <td>Self-managed persistence</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VertexAiSessionService</strong></td>
+                        <td>Uses Vertex AI infrastructure</td>
+                        <td>Yes (managed by Google Cloud)</td>
+                        <td>Production on Google Cloud</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Using Session State</h3>
+
+            <div class="code-block">
+<code>from google.adk.sessions import InMemorySessionService
+
+# Create session service
+session_service = InMemorySessionService()
+
+# Create a session
+session = await session_service.create_session(
+    app_name="my_app",
+    user_id="user_123"
+)
+
+# Access and modify state
+session.state['user_name'] = 'Alex'
+session.state['preferences'] = {'theme': 'dark'}
+
+# State persists across turns in the same session!</code>
+            </div>
+
+            <h3>Agentic Memory: Long-Term Context</h3>
+
+            <div class="feature-box success">
+                <h4>🎯 What is Agentic Memory?</h4>
+                <p><strong>Agentic Memory</strong> goes beyond sessions—it provides long-term context that persists across multiple conversations. Think of it as the agent's "long-term memory."</p>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Session vs Memory</h4>
+                    <p><strong>Session:</strong> Current conversation (short-term)</p>
+                    <p><strong>Memory:</strong> Across all conversations (long-term)</p>
+                </div>
+                <div class="card">
+                    <h4>Use Cases</h4>
+                    <ul style="margin: 1rem 0 0 1rem; font-size: 0.9rem;">
+                        <li>User preferences</li>
+                        <li>Past interactions</li>
+                        <li>Learned patterns</li>
+                        <li>Historical context</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="code-block">
+<code>from google.adk.memory import PreloadMemoryTool
+
+# Create agent with memory
+agent = LlmAgent(
+    name="stateful_agent",
+    model="gemini-2.0-flash",
+    instruction="""You are a Vehicle Voice Agent.
+    Use past interactions to provide personalized responses.""",
+    tools=[PreloadMemoryTool()]  # Enables memory retrieval
+)
+
+# Memory is automatically retrieved at the start of each turn
+# and included in the system instruction</code>
+            </div>
+
+            <div class="highlight">
+                <strong>💡 Pro Tip:</strong> By default, ADK uses in-memory storage locally and Vertex AI Memory Bank when deployed to production. This makes development seamless!
+            </div>
+        </section>
+
+        <!-- Multi-Agent Systems -->
+        <section id="multi-agent">
+            <h2>🤝 Multi-Agent Systems: Building Agent Teams</h2>
+
+            <div class="story-box">
+                <h4>🎯 Real-World Scenario: Travel Planning</h4>
+                <p>Imagine you're building a travel assistant. A single agent trying to do everything gets confused:</p>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li>Should I search for flights or hotels first?</li>
+                    <li>What about restaurant recommendations?</li>
+                    <li>How do I handle payment processing?</li>
+                    <li>What if something goes wrong?</li>
+                </ul>
+                <p><strong>Solution:</strong> Break it into specialized agents, each with a clear job!</p>
+            </div>
+
+            <h3>The Multi-Agent Approach</h3>
+
+            <div class="diagram">
+                <h4>Travel Planning System Architecture</h4>
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-icon">🎯</div>
+                        <h4>Coordinator Agent</h4>
+                        <p>Main agent that understands user intent and delegates to specialists</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">✈️</div>
+                        <h4>Flight Agent</h4>
+                        <p>Specialist in flight searches and bookings</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🏨</div>
+                        <h4>Hotel Agent</h4>
+                        <p>Expert in accommodation searches and reservations</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🍽️</div>
+                        <h4>Sightseeing Agent</h4>
+                        <p>Provides local recommendations and activities</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Agent-as-Tool Pattern</h3>
+
+            <div class="feature-box">
+                <h4>💡 Key Concept: Agents Can Be Tools!</h4>
+                <p>In ADK, specialized agents can be wrapped as tools and used by other agents. This creates powerful hierarchical systems.</p>
+            </div>
+
+            <div class="code-block">
+<code># Step 1: Create specialist agents
+flight_agent = LlmAgent(
+    name="flight_agent",
+    model="gemini-2.0-flash",
+    description="Expert in finding and booking flights",
+    instruction="Search for flights and provide options."
+)
+
+hotel_agent = LlmAgent(
+    name="hotel_agent",
+    model="gemini-2.0-flash",
+    description="Expert in finding and booking hotels",
+    instruction="Search for hotels and provide options."
+)
+
+# Step 2: Wrap agents as tools
+from google.adk.tools import AgentTool
+
+flight_tool = AgentTool(agent=flight_agent)
+hotel_tool = AgentTool(agent=hotel_agent)
+
+# Step 3: Create coordinator that uses these tools
+coordinator = LlmAgent(
+    name="travel_coordinator",
+    model="gemini-2.0-flash",
+    instruction="Help users plan trips by delegating to specialists.",
+    tools=[flight_tool, hotel_tool]
+)
+
+# Now coordinator can intelligently delegate to specialists!</code>
+            </div>
+
+            <h3>Workflow Agents: Orchestration Patterns</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">➡️</div>
+                    <h3>SequentialAgent</h3>
+                    <p>Executes agents one after another in a specific order</p>
+                    <p><strong>Use case:</strong> Step-by-step processes</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>ParallelAgent</h3>
+                    <p>Runs multiple agents simultaneously</p>
+                    <p><strong>Use case:</strong> Independent tasks that can run concurrently</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔄</div>
+                    <h3>LoopAgent</h3>
+                    <p>Repeats an agent until a condition is met</p>
+                    <p><strong>Use case:</strong> Iterative refinement</p>
+                </div>
+            </div>
+
+            <h3>Advanced Example: Optimized Travel Workflow</h3>
+
+            <div class="code-block">
+<code>from google.adk.agents import SequentialAgent, ParallelAgent
+
+# Step 1: Parallel search (flights + hotels simultaneously)
+parallel_search = ParallelAgent(
+    name="parallel_search",
+    agents=[flight_agent, hotel_agent]
+)
+
+# Step 2: Sequential workflow
+travel_workflow = SequentialAgent(
+    name="travel_workflow",
+    agents=[
+        sightseeing_agent,      # First: Get recommendations
+        parallel_search,         # Then: Search flights & hotels in parallel
+        summary_agent           # Finally: Create summary
+    ]
+)
+
+# Optimization achieved! 🎉
+# Instead of: sightseeing → flights → hotels (3 sequential steps)
+# We have: sightseeing → (flights || hotels) → summary (faster!)</code>
+            </div>
+
+            <h3>Quality Control: Review Loops</h3>
+
+            <div class="story-box">
+                <h4>🎯 The Quality Challenge</h4>
+                <p>Your travel summary agent creates a report, but how do you ensure it meets quality guidelines?</p>
+                <p><strong>Solution:</strong> Add a reviewer agent that checks quality and triggers regeneration if needed!</p>
+            </div>
+
+            <div class="code-block">
+<code># Create reviewer agent
+reviewer_agent = LlmAgent(
+    name="summary_reviewer",
+    model="gemini-2.0-flash",
+    instruction="""Review the travel summary.
+    Check for completeness and structure.
+    Return 'pass' or 'fail' with feedback."""
+)
+
+# Add to workflow with loop
+from google.adk.agents import LoopAgent
+
+quality_loop = LoopAgent(
+    name="quality_loop",
+    agents=[summary_agent, reviewer_agent],
+    max_iterations=3,  # Try up to 3 times
+    break_condition="pass"  # Stop when review passes
+)</code>
+            </div>
+
+            <div class="highlight">
+                <strong>💡 Pro Tip:</strong> Multi-agent systems are not just about delegation—they're about creating specialized, maintainable, and scalable agent architectures. Each agent has a clear responsibility, making debugging and improvements easier.
+            </div>
+        </section>
+
+        <!-- Multimodal Agents -->
+        <section>
+            <h2>🎬 Multimodal Agents: Beyond Text</h2>
+
+            <div class="feature-box success">
+                <h4>🎯 Native Multimodal Support</h4>
+                <p>ADK provides built-in support for voice, video, images, and real-time streaming with Gemini's multimodal capabilities. This integrates seamlessly with the Multimodal Live API.</p>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">🎤</div>
+                    <h3>Voice Interactions</h3>
+                    <p>Enable voice conversations with natural language understanding</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📹</div>
+                    <h3>Video Processing</h3>
+                    <p>Analyze and understand video content in real-time</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🖼️</div>
+                    <h3>Image Analysis</h3>
+                    <p>Process and understand images for various use cases</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📡</div>
+                    <h3>Real-Time Streaming</h3>
+                    <p>Handle live data streams with low latency</p>
+                </div>
+            </div>
+
+            <div class="feature-box">
+                <p><strong>Best part?</strong> Often enabled with simple configuration changes—no complex implementation required!</p>
+            </div>
+        </section>
+
+        <!-- MCP and A2A -->
+        <section>
+            <h2>🔌 MCP & A2A: Standardized Protocols</h2>
+
+            <h3>Model Context Protocol (MCP)</h3>
+
+            <div class="feature-box">
+                <h4>📖 What is MCP?</h4>
+                <p><strong>Model Context Protocol</strong> is an open protocol that standardizes how applications provide context to LLMs. Think of it as a universal adapter for connecting data sources to AI agents.</p>
+            </div>
+
+            <div class="diagram">
+                <h4>MCP Architecture</h4>
+                <div class="diagram-flow">
+                    <div class="diagram-box">Your ADK Agent<br>(MCP Client)</div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-box">MCP Protocol</div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-box">MCP Server<br>(Database, API, etc.)</div>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Pattern 1: ADK as MCP Client</h4>
+                    <p>Your ADK agent uses tools from existing MCP servers</p>
+                    <div class="code-block" style="font-size: 0.8rem; margin-top: 1rem;">
+<code>from google.adk.tools.mcp_tool import MCPToolset
+
+mcp_tools = MCPToolset(
+    server_url="http://localhost:8000"
+)
+
+agent = LlmAgent(
+    name="agent",
+    tools=[mcp_tools]
+)</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>Pattern 2: ADK as MCP Server</h4>
+                    <p>Wrap your ADK tools in an MCP server to share with any MCP client</p>
+                    <div class="code-block" style="font-size: 0.8rem; margin-top: 1rem;">
+<code># Expose ADK tools via MCP
+from google.adk.mcp import create_mcp_server
+
+server = create_mcp_server(
+    tools=[my_tool_1, my_tool_2]
+)
+server.run()</code>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Agent-to-Agent (A2A) Protocol</h3>
+
+            <div class="feature-box">
+                <h4>📖 What is A2A?</h4>
+                <p><strong>Agent-to-Agent Protocol</strong> is an open standard designed to enable communication and collaboration between AI agents, even across different systems and organizations.</p>
+            </div>
+
+            <div class="highlight">
+                <strong>💡 Use Case:</strong> Imagine your customer service agent (running on your infrastructure) needs to communicate with a payment processing agent (running on a partner's infrastructure). A2A makes this seamless!
+            </div>
+        </section>
+
+        <!-- Evaluation and Deployment -->
+        <section id="deployment">
+            <h2>🚀 Evaluation & Deployment</h2>
+
+            <h3>Built-in Agent Evaluation</h3>
+
+            <div class="feature-box">
+                <h4>🎯 Why Evaluate?</h4>
+                <p>Before deploying your agent to production, you need to know: Does it actually work well? ADK provides tools to systematically assess agent performance.</p>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>📊 Evaluation Datasets</h4>
+                    <p>Create multi-turn evaluation scenarios that test your agent's capabilities</p>
+                </div>
+                <div class="card">
+                    <h4>🧪 Local Testing</h4>
+                    <p>Run evaluations via CLI or dev UI to measure quality before deployment</p>
+                </div>
+                <div class="card">
+                    <h4>📈 Metrics</h4>
+                    <p>Track accuracy, response quality, tool usage, and custom metrics</p>
+                </div>
+            </div>
+
+            <h3>Deployment Options</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">💻</div>
+                    <h3>Local Development</h3>
+                    <p><strong>Tools:</strong> adk web, adk run</p>
+                    <p><strong>Best for:</strong> Development and testing</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🐳</div>
+                    <h3>Containerized (Cloud Run)</h3>
+                    <p><strong>Tools:</strong> Docker, Cloud Run</p>
+                    <p><strong>Best for:</strong> Scalable web services</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">☁️</div>
+                    <h3>Vertex AI Agent Engine</h3>
+                    <p><strong>Platform:</strong> Fully managed Google Cloud</p>
+                    <p><strong>Best for:</strong> Enterprise production deployments</p>
+                </div>
+            </div>
+
+            <h3>Deploying to Vertex AI Agent Engine</h3>
+
+            <ol class="steps">
+                <li>
+                    <strong>Prepare Your Agent</strong>
+                    <p>Ensure your agent is production-ready with proper error handling and monitoring.</p>
+                </li>
+
+                <li>
+                    <strong>Configure Deployment</strong>
+                    <div class="code-block">
+<code>from vertexai.agent_engines import AdkApp
+
+app = AdkApp(
+    agent=my_agent,
+    project="your-project-id",
+    location="us-central1"
+)
+
+# Deploy
+app.deploy()</code>
+                    </div>
+                </li>
+
+                <li>
+                    <strong>Monitor & Scale</strong>
+                    <p>Vertex AI automatically handles scaling, monitoring, and logging. Use Cloud Console to track performance.</p>
+                </li>
+            </ol>
+
+            <div class="feature-box success">
+                <h4>✨ Benefits of Vertex AI Agent Engine:</h4>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li>Automatic scaling based on demand</li>
+                    <li>Built-in monitoring and logging</li>
+                    <li>Enterprise security and compliance</li>
+                    <li>Integration with other Google Cloud services</li>
+                    <li>Managed infrastructure—no DevOps overhead</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section id="best-practices">
+            <h2>⭐ Best Practices & Security</h2>
+
+            <h3>Security Best Practices</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">🔐</div>
+                    <h3>Credential Management</h3>
+                    <ul style="font-size: 0.9rem; margin: 0.5rem 0 0 1rem;">
+                        <li>Never hardcode API keys</li>
+                        <li>Use secret management tools</li>
+                        <li>Rotate credentials regularly</li>
+                        <li>Use service accounts in production</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🛡️</div>
+                    <h3>Input Validation</h3>
+                    <ul style="font-size: 0.9rem; margin: 0.5rem 0 0 1rem;">
+                        <li>Validate all user inputs</li>
+                        <li>Sanitize data before processing</li>
+                        <li>Implement rate limiting</li>
+                        <li>Use type hints and validation</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🚨</div>
+                    <h3>Error Handling</h3>
+                    <ul style="font-size: 0.9rem; margin: 0.5rem 0 0 1rem;">
+                        <li>Implement try-catch in tools</li>
+                        <li>Use exponential backoff</li>
+                        <li>Provide meaningful error messages</li>
+                        <li>Log errors for debugging</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔍</div>
+                    <h3>Monitoring & Logging</h3>
+                    <ul style="font-size: 0.9rem; margin: 0.5rem 0 0 1rem;">
+                        <li>Track agent performance</li>
+                        <li>Monitor tool execution</li>
+                        <li>Log important events</li>
+                        <li>Set up alerts for failures</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Tool Error Handling</h3>
+
+            <div class="feature-box danger">
+                <h4>❌ Common Mistakes:</h4>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li><strong>Silent failures:</strong> Tools that fail without clear error signals</li>
+                    <li><strong>Infinite retry loops:</strong> No retry limits or backoff</li>
+                    <li><strong>Missing timeouts:</strong> Operations that block indefinitely</li>
+                    <li><strong>Ignoring ToolContext:</strong> Missing valuable error management capabilities</li>
+                </ul>
+            </div>
+
+            <div class="feature-box success">
+                <h4>✅ Best Practices:</h4>
+                <div class="code-block">
+<code>@tool
+def api_call_with_error_handling(url: str) -> dict:
+    """Safe API call with proper error handling."""
+    try:
+        # Implement timeout
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        return {"status": "success", "data": response.json()}
+        
+    except requests.Timeout:
+        return {
+            "status": "error",
+            "error_type": "timeout",
+            "error_message": "API request timed out",
+            "suggestions": ["Try again later"]
+        }
+        
+    except requests.RequestException as e:
+        return {
+            "status": "error",
+            "error_type": "api_error",
+            "error_message": str(e),
+            "suggestions": ["Check API endpoint", "Verify credentials"]
+        }
+        
+    except Exception as e:
+        # Log unexpected errors
+        logger.error(f"Unexpected error in api_call: {e}")
+        return {
+            "status": "error",
+            "error_type": "unknown",
+            "error_message": "An unexpected error occurred"
+        }</code>
+                </div>
+            </div>
+
+            <h3>Prompt Engineering for Agents</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>✅ Clear Instructions</h4>
+                    <p>Be explicit about what the agent should and shouldn't do</p>
+                </div>
+                <div class="card">
+                    <h4>✅ Tool Documentation</h4>
+                    <p>Explain common tool errors and how to respond</p>
+                </div>
+                <div class="card">
+                    <h4>✅ Examples</h4>
+                    <p>Provide examples of good interactions</p>
+                </div>
+                <div class="card">
+                    <h4>✅ Constraints</h4>
+                    <p>Define boundaries and limitations clearly</p>
+                </div>
+            </div>
+
+            <h3>Performance Optimization</h3>
+
+            <div class="highlight">
+                <strong>💡 Tips for Faster Agents:</strong>
+                <ul style="margin: 1rem 0 0 2rem;">
+                    <li>Use parallel agents for independent tasks</li>
+                    <li>Cache frequently accessed data in session state</li>
+                    <li>Choose appropriate models (flash for speed, pro for complex reasoning)</li>
+                    <li>Minimize tool calls when possible</li>
+                    <li>Implement efficient database queries</li>
+                    <li>Use built-in tools when available (they're optimized)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Getting Started Action Plan -->
+        <section>
+            <h2>🎯 Your Action Plan: Next Steps</h2>
+
+            <div class="story-box">
+                <h4>🚀 Ready to Build? Here's Your Roadmap!</h4>
+            </div>
+
+            <ol class="steps">
+                <li>
+                    <strong>Set Up Your Environment</strong>
+                    <ul style="margin: 0.5rem 0 0 1rem;">
+                        <li>Install ADK: <code>pip install google-adk</code></li>
+                        <li>Get API key from <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a></li>
+                        <li>Create your first project: <code>adk create --type=code my_agent</code></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Build a Simple Agent</strong>
+                    <ul style="margin: 0.5rem 0 0 1rem;">
+                        <li>Start with a basic conversational agent</li>
+                        <li>Add 1-2 simple custom tools</li>
+                        <li>Test using <code>adk web</code> for visual debugging</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Add Complexity Gradually</strong>
+                    <ul style="margin: 0.5rem 0 0 1rem;">
+                        <li>Integrate a built-in tool (Google Search or Code Execution)</li>
+                        <li>Implement session state for memory</li>
+                        <li>Create a second specialist agent</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Build a Multi-Agent System</strong>
+                    <ul style="margin: 0.5rem 0 0 1rem;">
+                        <li>Use Agent-as-Tool pattern</li>
+                        <li>Implement workflow agents (Sequential/Parallel)</li>
+                        <li>Add error handling and quality loops</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Prepare for Production</strong>
+                    <ul style="margin: 0.5rem 0 0 1rem;">
+                        <li>Implement comprehensive error handling</li>
+                        <li>Add evaluation tests</li>
+                        <li>Set up monitoring and logging</li>
+                        <li>Deploy to Vertex AI Agent Engine</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">📚</div>
+                    <h3>Essential Resources</h3>
+                    <ul style="font-size: 0.9rem; margin: 0.5rem 0 0 1rem;">
+                        <li><a href="https://google.github.io/adk-docs/" target="_blank">Official ADK Documentation</a></li>
+                        <li><a href="https://github.com/google/adk-python" target="_blank">GitHub Repository</a></li>
+                        <li><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/agent-development-kit/quickstart" target="_blank">Vertex AI ADK Guide</a></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h3>Example Projects</h3>
+                    <ul style="font-size: 0.9rem; margin: 0.5rem 0 0 1rem;">
+                        <li>Customer service chatbot</li>
+                        <li>Data analysis assistant</li>
+                        <li>Travel planning system</li>
+                        <li>Code review assistant</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎓</div>
+                    <h3>Learning Path</h3>
+                    <ul style="font-size: 0.9rem; margin: 0.5rem 0 0 1rem;">
+                        <li>Week 1: Basic agents & tools</li>
+                        <li>Week 2: Memory & sessions</li>
+                        <li>Week 3: Multi-agent systems</li>
+                        <li>Week 4: Production deployment</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🤝</div>
+                    <h3>Community</h3>
+                    <ul style="font-size: 0.9rem; margin: 0.5rem 0 0 1rem;">
+                        <li>Join Google Cloud community</li>
+                        <li>Follow ADK GitHub discussions</li>
+                        <li>Share your projects</li>
+                        <li>Contribute to open source</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-box success" style="text-align: center; margin-top: 3rem;">
+                <h3 style="margin-top: 0;">🎉 You're Ready to Build!</h3>
+                <p style="font-size: 1.2rem; margin: 1rem 0;">The world of AI agents is evolving rapidly, and you now have the tools to be part of it.</p>
+                <div>
+                    <a href="https://google.github.io/adk-docs/get-started/" target="_blank" class="btn">Start Building with ADK</a>
+                    <a href="https://aistudio.google.com/apikey" target="_blank" class="btn btn-success">Get Your API Key</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section>
+            <h2>📋 Quick Reference Cheat Sheet</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Installation</h4>
+                    <div class="code-block" style="font-size: 0.8rem;">
+<code>pip install google-adk
+adk create --type=code my_agent</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>Basic Agent</h4>
+                    <div class="code-block" style="font-size: 0.8rem;">
+<code>from google.adk.agents import LlmAgent
+
+agent = LlmAgent(
+    name="my_agent",
+    model="gemini-2.0-flash",
+    instruction="Your prompt"
+)</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>Custom Tool</h4>
+                    <div class="code-block" style="font-size: 0.8rem;">
+<code>from google.adk.tools import tool
+
+@tool
+def my_tool(param: str) -> str:
+    """Tool description."""
+    return "result"</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>Agent with Tools</h4>
+                    <div class="code-block" style="font-size: 0.8rem;">
+<code>agent = LlmAgent(
+    name="agent",
+    model="gemini-2.0-flash",
+    tools=[my_tool, "google_search"]
+)</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>Multi-Agent</h4>
+                    <div class="code-block" style="font-size: 0.8rem;">
+<code>from google.adk.tools import AgentTool
+
+sub_tool = AgentTool(agent=sub_agent)
+main = LlmAgent(tools=[sub_tool])</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>Run Agent</h4>
+                    <div class="code-block" style="font-size: 0.8rem;">
+<code># Web UI
+adk web
+
+# CLI
+adk run
+
+# Code
+python agent.py</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p style="font-size: 1.3rem; margin-bottom: 1rem;">🚀 Happy Building with Google ADK!</p>
+        <p>Created with ❤️ for developers building the future of AI agents</p>
+        <p style="margin-top: 1rem;">
+            <a href="https://google.github.io/adk-docs/" target="_blank">Official Documentation</a> |
+            <a href="https://github.com/google/adk-python" target="_blank">GitHub</a> |
+            <a href="https://cloud.google.com/vertex-ai/generative-ai/docs/agent-development-kit/overview" target="_blank">Google Cloud Docs</a>
+        </p>
+        <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.8;">
+            Last updated: November 2025 • ADK evolves rapidly—check official docs for latest features
+        </p>
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p style="font-size: 0.95rem;">
+                © 2025 <strong>Dheeraj Chitlangi</strong>. All rights reserved.
+            </p>
+            <p style="font-size: 0.85rem; opacity: 0.7; margin-top: 0.5rem;">
+                This comprehensive learning guide is based on official Google ADK documentation and bootcamp materials.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
