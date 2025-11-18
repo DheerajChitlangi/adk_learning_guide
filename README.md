@@ -220,8 +220,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Dheeraj Chitlangi**
 
-- GitHub: [@yourusername](https://github.com/DheerajChitlangi)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/dheerajchitlangi)
+- GitHub: [DheerajChitlangi](https://github.com/DheerajChitlangi)
+- LinkedIn: [DheerajChitlangi](https://linkedin.com/in/dheerajchitlangi)
 
 ---
 
