@@ -18,12 +18,16 @@ This repository contains everything you need to build sophisticated AI agents us
 
 ---
 
-## 🎥 Video Primer
+## 🎥 Video Primer & video tutorials
 
 Watch the complete walkthrough on YouTube:
 https://www.youtube.com/watch?v=_K-WxIFcz1c 
 
+
 > 🔔 **Subscribe** to stay updated with new content and tutorials!
+
+Check out the complete Youtube playlist on ADK from Janakiram MSV
+https://www.youtube.com/watch?v=vPXRYYD9omk&list=PLF3s2WICJlqP03Ovndv-dnO7OfFYnmi3Y 
 
 ---
 
@@ -80,7 +84,7 @@ adk web
 
 ## 💻 Code Examples
 
-### All the examples notebooks(ipynb) are Kaggle compatible and can be executed in Kaggle. Download & modify the code accordingly to execute in local environments(Replace Kaggle environments & properties)
+### All the examples notebooks(ipynb) are Kaggle compatible and can be executed in Kaggle. Download & modify the code accordingly to execute in local environments(Replace Kaggle environments & properties). This code examples have been taken from Kaggle. 
 
 ### 1. Basic Agent
 
